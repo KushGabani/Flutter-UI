@@ -6,25 +6,29 @@ const kBestSellerColor = Color(0xFFFFD073);
 const kGreenColor = Color(0xFF49CC96);
 
 const kHeadingTextStyle = TextStyle(
-  fontSize: 28.0,
+  fontSize: 24.0,
   color: kTextColor,
   fontWeight: FontWeight.bold,
+  fontFamily: "Nunito",
 );
 
 const kSubHeadingTextStyle = TextStyle(
-  fontSize: 24,
+  fontSize: 21,
   color: Color(0xDD616888),
   height: 2,
+  fontFamily: "Nunito",
 );
 
 const kTitleTextStyle = TextStyle(
-  fontSize: 20.0,
+  fontSize: 18.0,
   color: kTextColor,
-  fontWeight: FontWeight.bold
+  fontWeight: FontWeight.bold,
+  fontFamily: "Nunito",
 );
 
 const kSubtitleTextStyle = TextStyle(
-  fontSize: 18,
+  fontSize: 16,
   color: kTextColor,
-  fontWeight: FontWeight.bold
+  fontWeight: FontWeight.bold,
+  fontFamily: "Nunito",
 );

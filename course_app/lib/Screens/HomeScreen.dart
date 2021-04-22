@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Container(
+          padding: const EdgeInsets.all(20.0),
           height: size.height,
           width: double.infinity,
           child: Column(
@@ -22,6 +23,22 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: 30),
               Greeting(username: "Kush Gabani"),
               SearchBox(),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Categories",
+                      style: kTitleTextStyle,
+                    ),
+                    Text(
+                      "See All",
+                      style: kSubtitleTextStyle.copyWith(color: kBlueColor),
+                    ),
+                  ],
+                ),
+              ),
               CourseGridView(),
             ],
           ),

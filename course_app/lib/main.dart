@@ -1,4 +1,4 @@
-import 'package:course_app/Screens/HomeScreen.dart';
+import 'package:course_app/Screens/CourseDetailScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: HomeScreen(),
+      home: CourseDetailScreen(),
+      // home: HomeScreen(),
     );
   }
 }

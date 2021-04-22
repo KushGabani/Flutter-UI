@@ -13,29 +13,53 @@ class CourseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: index.isEven ? 200 : 240,
-      padding: const EdgeInsets.all(20),
+      height: index.isEven ? 175.0 : 200.0,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: kBlueColor,
         image: DecorationImage(
           image: AssetImage(categories[index].image),
           fit: BoxFit.fill,
         ),
+        borderRadius: BorderRadius.circular(15.0),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            categories[index].name,
-            style: kTitleTextStyle,
-          ),
-          Text(
-            '${categories[index].numOfCourses} courses',
-            style: TextStyle(
-              color: kTextColor.withOpacity(0.5),
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: index.isEven ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+        children: [
+          Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3.0),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.06),
+                  offset: const Offset(5.0, 5.0),
+                  blurRadius: 10.0,
+                  spreadRadius: 2.0,
+                ), //BoxShadow//BoxShadow
+              ],
             ),
-          )
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  categories[index].name,
+                  style: kTitleTextStyle,
+                ),
+                Text(
+                  '${categories[index].numOfCourses} courses',
+                  style: kSubHeadingTextStyle.copyWith(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    height: 1.5,
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
