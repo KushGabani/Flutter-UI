@@ -12,7 +12,13 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         body: Column(
           children: <Widget>[
-            CustomAppBar(),
+            CustomAppBar(
+              supportIcon: Icon(
+                Icons.search,
+                size: 40.0,
+                color: Colors.white,
+              ),
+            ),
             CategorySelector(),
             Expanded(
               child: Container(
@@ -24,10 +30,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 child: Column(
-                  children: <Widget>[
-                    FavoriteContacts(),
-                    ChatList()
-                  ],
+                  children: <Widget>[FavoriteContacts(), ChatList()],
                 ),
               ),
             )
