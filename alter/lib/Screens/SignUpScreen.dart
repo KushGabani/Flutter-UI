@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 import './../Components/tab_switch.dart';
 import './../Components/authentication_form.dart';
-
-import 'package:flutter_svg/flutter_svg.dart';
 import './../Components/page_header.dart';
 import '../constants.dart';
 
@@ -41,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     isLightTheme: this.tabIndex == 0
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 30.0, bottom: 50.0),
+                    padding: const EdgeInsets.only(top: 50.0, bottom: 50.0),
                     child: TabSwitch(
                       index: this.tabIndex,
                       onPressed: changeTab,

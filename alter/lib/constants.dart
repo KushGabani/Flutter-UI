@@ -10,4 +10,5 @@ class ColorPallete {
   static const Color kBackgroundPalleteColor = Color(0xFFF1F4F8);
   static const Color kBackgroundColor = Colors.white;
   static const Color kAccentColor = Color(0xFFFF5E03);
+  static const Color kSuccessAccentColor = Color(0xFF29D001);
 }

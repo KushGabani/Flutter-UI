@@ -29,6 +29,13 @@
             {
               "client_id": "594227510263-p8kjv55sc6ndkutrkadqkoam5816plk8.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "594227510263-gg2vl78sqceuaqkhd4rptb51lgurqqi6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.alterauth.alter"
+              }
             }
           ]
         }

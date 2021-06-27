@@ -4,12 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../constants.dart';
 
 class SignInWithButton extends StatelessWidget {
-  final String With;
+  final String provider;
   final Function onPressed;
 
   const SignInWithButton({
     Key key,
-    this.With,
+    this.provider,
     this.onPressed,
   }) : super(key: key);
 
@@ -24,7 +24,7 @@ class SignInWithButton extends StatelessWidget {
           color: ColorPallete.kLightBlueColor,
           shape: BoxShape.circle,
         ),
-        child: SvgPicture.asset("assets/icons/" + this.With + ".svg"),
+        child: SvgPicture.asset("assets/icons/" + this.provider + ".svg"),
       ),
     );
   }

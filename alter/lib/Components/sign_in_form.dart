@@ -46,16 +46,19 @@ class _SignInFormState extends State<SignInForm> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             SignInWithButton(
-              With: "Google",
+              provider: "Google",
               onPressed: () {},
             ),
             SizedBox(width: 40.0,),
             SignInWithButton(
-              With: "Apple",
+              provider: "Apple",
               onPressed: () {},
             ),
           ],
-        )
+        ),
+        SizedBox(
+          height: 40.0,
+        ),
       ],
     );
   }
