@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "594227510263",
+    "project_id": "alter-auth",
+    "storage_bucket": "alter-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594227510263:android:4952ef2dc96b6b3d73ccf2",
+        "android_client_info": {
+          "package_name": "com.alterauth.alter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594227510263-p8kjv55sc6ndkutrkadqkoam5816plk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUIVpjdFrqbWkH3XDkYb30Zl9JIOnKuTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594227510263-p8kjv55sc6ndkutrkadqkoam5816plk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
