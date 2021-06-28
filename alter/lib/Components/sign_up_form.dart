@@ -56,26 +56,16 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
         SubmitButton(
           text: "Sign Up",
+          isSignUp: true,
           onSubmit: _onSubmitWithEmail,
         ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            SignInWithButton(
-              provider: "Google",
-              onPressed: _onSubmitWithGoogle,
-            ),
-            SizedBox(
-              width: 40.0,
-            ),
-            SignInWithButton(
-              provider: "Apple",
-              onPressed: () {},
-            ),
-          ],
+        SignInWithButton(
+          provider: "Google",
+          isLight: true,
+          onPressed: _onSubmitWithGoogle,
         ),
         SizedBox(
-          height: 40.0,
+          width: 40.0,
         ),
       ],
     );
@@ -188,6 +178,8 @@ class _SignUpFormState extends State<SignUpForm> {
 
   void _onSubmitWithGoogle() async {
     UserCredential user = await AuthMethods.signInWithGoogle();
+    print(user.toString());
+    print("===============================");
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: SnackbarContent(
