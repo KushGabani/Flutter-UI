@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
-import './../constants.dart';
-import './snackbar_content.dart';
 import './custom_form_field.dart';
+import './sign_in_with_button.dart';
+import './submit_button.dart';
+import './snackbar_notification.dart';
+import './../constants.dart';
 import './../resources/auth_methods.dart';
-import './../Components/sign_in_with_button.dart';
-import './../Components/submit_button.dart';
+import './../Screens/ForgotPasswordScreen.dart';
+import './../Screens/OtpAuthentication.dart';
 import './../Screens/HomeScreen.dart';
 
 class SignInForm extends StatefulWidget {
@@ -23,6 +25,7 @@ class _SignInFormState extends State<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -42,17 +45,54 @@ class _SignInFormState extends State<SignInForm> {
           inputType: TextInputType.text,
         ),
         SizedBox(
-          height: 30.0,
+          height: 5.0,
+        ),
+        Container(
+          width: size.width * 0.78,
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            child: Text(
+              "forgot password?",
+              style: TextStyle(
+                  color: ColorPallete.kDarkBlueColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ForgotPasswordScreen(),
+                ),
+              );
+            },
+          ),
+        ),
+        SizedBox(
+          height: 5.0,
         ),
         SubmitButton(
-            text: "Sign In",
-            isSignUp: false,
-            onSubmit: _onSubmitWithEmail,
+          text: "Sign In",
+          isSignUp: false,
+          onSubmit: _onSubmitWithEmail,
         ),
-        SignInWithButton(
-          provider: "Google",
-          isLight: false,
-          onPressed: _onSubmitWithGoogle,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SignInWithButton(
+              provider: "Google",
+              isLight: true,
+              onPressed: _onSubmitWithGoogle,
+            ),
+            SizedBox(
+              width: 50.0,
+            ),
+            SignInWithButton(
+              provider: "phone",
+              isLight: true,
+              onPressed: goToVerifyPhone,
+            ),
+          ],
         ),
         SizedBox(
           height: 40.0,
@@ -62,91 +102,36 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   void _onSubmitWithEmail() async {
-    if (_emailController.text == "" ||
-        _passwordController.text == "") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: SnackbarContent(
-            text: "Email/Password cannot be blank",
-            error: true,
-          ),
-          duration: const Duration(seconds: 1),
-          backgroundColor: ColorPallete.kAccentColor,
-        ),
-      );
+    if (_emailController.text == "" || _passwordController.text == "") {
+      snackbarNotification(context, "Email/Password cannot be blank", true);
     } else if (!EmailValidator.validate(_emailController.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: SnackbarContent(
-            text: "Not a valid Email",
-            error: true,
-          ),
-          duration: const Duration(seconds: 1),
-          backgroundColor: ColorPallete.kAccentColor,
-        ),
-      );
+      snackbarNotification(context, "Not a valid Email", true);
     } else {
       String response = await AuthMethods.signIn(
           _emailController.text, _passwordController.text);
       switch (response.toString()) {
         case "user-not-found":
           {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: SnackbarContent(
-                  text: "The user does not exist",
-                  error: true,
-                ),
-                duration: const Duration(seconds: 1),
-                backgroundColor: ColorPallete.kAccentColor,
-              ),
-            );
+            snackbarNotification(context, "The user does not exist", true);
           }
           break;
 
         case "wrong-password":
           {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: SnackbarContent(
-                  text: "Incorrect Password",
-                  error: true,
-                ),
-                duration: const Duration(seconds: 1),
-                backgroundColor: ColorPallete.kAccentColor,
-              ),
-            );
+            snackbarNotification(context, "Incorrect password", true);
           }
           break;
 
         case "error":
           {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: SnackbarContent(
-                  text: "Oops! Looks like a server issue",
-                  error: true,
-                ),
-                duration: const Duration(seconds: 1),
-                backgroundColor: ColorPallete.kAccentColor,
-              ),
-            );
+            snackbarNotification(
+                context, "Oops! Looks like a server issue", true);
           }
           break;
 
         case "success":
           {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: SnackbarContent(
-                  text: "User Signed In.",
-                  error: false,
-                ),
-                duration: const Duration(seconds: 1),
-                backgroundColor: ColorPallete.kSuccessAccentColor,
-              ),
-            );
-
+            snackbarNotification(context, "User signed in", false);
             goToHome();
           }
           break;
@@ -156,18 +141,7 @@ class _SignInFormState extends State<SignInForm> {
 
   void _onSubmitWithGoogle() async {
     UserCredential user = await AuthMethods.signInWithGoogle();
-    print(user.toString());
-    print("===============================");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: SnackbarContent(
-          text: "User Registered.",
-          error: false,
-        ),
-        duration: const Duration(seconds: 2),
-        backgroundColor: ColorPallete.kSuccessAccentColor,
-      ),
-    );
+    snackbarNotification(context, "User Registered", false);
     goToHome();
   }
 
@@ -176,6 +150,15 @@ class _SignInFormState extends State<SignInForm> {
       context,
       MaterialPageRoute(
         builder: (context) => HomeScreen(),
+      ),
+    );
+  }
+
+  goToVerifyPhone() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OtpAuthentication(),
       ),
     );
   }

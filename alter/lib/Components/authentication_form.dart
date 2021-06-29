@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './../Components/sign_up_form.dart';
-import './../Components/sign_in_form.dart';
+
+import './sign_up_form.dart';
+import './sign_in_form.dart';
 
 class AuthenticationForm extends StatelessWidget {
   final bool isSignUpForm;

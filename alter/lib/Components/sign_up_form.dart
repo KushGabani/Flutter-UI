@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
 import './custom_form_field.dart';
-import './../constants.dart';
+import './sign_in_with_button.dart';
+import './snackbar_notification.dart';
+import './submit_button.dart';
+import './../Screens/OtpAuthentication.dart';
 import './../Screens/HomeScreen.dart';
-import './../Components/snackbar_content.dart';
-import './../Components/sign_in_with_button.dart';
-import './../Components/submit_button.dart';
 import './../resources/auth_methods.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -59,10 +59,23 @@ class _SignUpFormState extends State<SignUpForm> {
           isSignUp: true,
           onSubmit: _onSubmitWithEmail,
         ),
-        SignInWithButton(
-          provider: "Google",
-          isLight: true,
-          onPressed: _onSubmitWithGoogle,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SignInWithButton(
+              provider: "Google",
+              isLight: true,
+              onPressed: _onSubmitWithGoogle,
+            ),
+            SizedBox(
+              width: 50.0,
+            ),
+            SignInWithButton(
+              provider: "phone",
+              isLight: true,
+              onPressed: goToVerifyPhone,
+            ),
+          ],
         ),
         SizedBox(
           width: 40.0,
@@ -75,100 +88,37 @@ class _SignUpFormState extends State<SignUpForm> {
     if (_emailController.text == "" ||
         _passwordController.text == "" ||
         _confirmPasswordController.text == "") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: SnackbarContent(
-            text: "Email/Password cannot be blank",
-            error: true,
-          ),
-          duration: const Duration(seconds: 1),
-          backgroundColor: ColorPallete.kAccentColor,
-        ),
-      );
+      snackbarNotification(context, "Email/Password cannot be blank", true);
     } else if (!EmailValidator.validate(_emailController.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: SnackbarContent(
-            text: "Not a valid Email",
-            error: true,
-          ),
-          duration: const Duration(seconds: 1),
-          backgroundColor: ColorPallete.kAccentColor,
-        ),
-      );
+      snackbarNotification(context, "Not a valid Email", true);
     } else if (_passwordController.text != _confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: SnackbarContent(
-            text: "Passwords do not match",
-            error: true,
-          ),
-          duration: const Duration(seconds: 1),
-          backgroundColor: ColorPallete.kAccentColor,
-        ),
-      );
+      snackbarNotification(context, "Passwords do not match", true);
     } else {
       String response = await AuthMethods.signUp(
           _emailController.text, _passwordController.text);
       switch (response.toString()) {
         case "weak-password":
           {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: SnackbarContent(
-                  text: "Create a stronger password",
-                  error: true,
-                ),
-                duration: const Duration(seconds: 1),
-                backgroundColor: ColorPallete.kAccentColor,
-              ),
-            );
+            snackbarNotification(context, "Create a stronger password", true);
           }
           break;
 
         case "email-already-in-use":
           {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: SnackbarContent(
-                  text: "The user already exists",
-                  error: true,
-                ),
-                duration: const Duration(seconds: 1),
-                backgroundColor: ColorPallete.kAccentColor,
-              ),
-            );
+            snackbarNotification(context, "The user already exists", true);
           }
           break;
 
         case "error":
           {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: SnackbarContent(
-                  text: "Oops! Looks like a server issue",
-                  error: true,
-                ),
-                duration: const Duration(seconds: 1),
-                backgroundColor: ColorPallete.kAccentColor,
-              ),
-            );
+            snackbarNotification(
+                context, "Oops! Looks like a server issue", true);
           }
           break;
 
         case "success":
           {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: SnackbarContent(
-                  text: "User Registered.",
-                  error: false,
-                ),
-                duration: const Duration(seconds: 1),
-                backgroundColor: ColorPallete.kSuccessAccentColor,
-              ),
-            );
-
+            snackbarNotification(context, "User Registered", false);
             goToHome();
           }
           break;
@@ -178,18 +128,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   void _onSubmitWithGoogle() async {
     UserCredential user = await AuthMethods.signInWithGoogle();
-    print(user.toString());
-    print("===============================");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: SnackbarContent(
-          text: "User Registered.",
-          error: false,
-        ),
-        duration: const Duration(seconds: 2),
-        backgroundColor: ColorPallete.kSuccessAccentColor,
-      ),
-    );
+    snackbarNotification(context, "User Registered", false);
     goToHome();
   }
 
@@ -198,6 +137,15 @@ class _SignUpFormState extends State<SignUpForm> {
       context,
       MaterialPageRoute(
         builder: (context) => HomeScreen(),
+      ),
+    );
+  }
+
+  void goToVerifyPhone() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OtpAuthentication(),
       ),
     );
   }
